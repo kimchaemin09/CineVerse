@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090812">
+<title>CineVerse | 영화가 만드는 또 다른 세상</title>
+
+<style>
+:root {
+--bg: #090812;
+--panel: #141120;
+--panel-light: #1d172b;
+--purple: #a855f7;
+--purple-light: #c084fc;
+--text: #f5f0ff;
+--muted: #aaa1bb;
+--border: #302640;
+--gold: #f5c451;
+}
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+background:
+\radial-gradient(ellipse at 75% 0%, #241237 0%, transparent 35%),
+\var(--bg);
+color: var(--text);
+font-family: Arial, "Apple SD Gothic Neo",
+"Malgun Gothic", sans-serif;
+}
+
+button, input, select {
+font: inherit;
+}
+
+button {
+cursor: pointer;
+}
+
+a {
+color: inherit;
+text-decoration: none;
+}
+
+/* 전체 레이아웃 */
+
+.app {
+min-height: 100vh;
+}
+
+/* 왼쪽 사이드바 */
+
+.sidebar {
+position: fixed;
+top: 0;
+left: 0;
+bottom: 0;
+width: 225px;
+padding: 28px 15px;
+background: linear-gradient(180deg, #120e1e, #090812);
+border-right: 1px solid var(--border);
+z-index: 100;
+display: flex;
+flex-direction: column;
+}
+
+.brand {
+display: flex;
+align-items: center;
+gap: 10px;
+margin: 0 8px 48px;
+font-size: 25px;
+font-weight: 900;
+letter-spacing: -1px;
+}
+
+.brand-mark {
+color: var(--purple-light);
+font-size: 31px;
+}
+
+.nav {
+display: grid;
+gap: 9px;
+}
+
+.nav button {
+width: 100%;
+border: none;
+background: transparent;
+color: #c9c0d8;
+text-align: left;
+padding: 14px 16px;
+border-radius: 12px;
+font-weight: 650;
+transition: 0.2s;
+}
+
+.nav button:hover,
+.nav button.active {
+background: linear-gradient(90deg, #7133ad, #28183f);
+color: white;
+}
+
+.nav .ico {
+display: inline-block;
+width: 30px;
+color: var(--purple-light);
+}
+
+.side-note {
+margin-top: auto;
+padding: 12px;
+color: #a879e9;
+font-family: Georgia, serif;
+font-style: italic;
+line-height: 1.5;
+}
+
+/* 메인 콘텐츠 */
+
+main {
+margin-left: 225px;
+padding: 0 32px 60px;
+}
+
+/* 상단 검색 영역 */
+
+.topbar {
+height: 82px;
+display: flex;
+align-items: center;
+gap: 18px;
+position: sticky;
+top: 0;
+background: #090812ed;
+backdrop-filter: blur(15px);
+z-index: 50;
+}
+
+.search {
+max-width: 620px;
+flex: 1;
+position: relative;
+}
+
+.search input {
+width: 100%;
+background: #171326;
+border: 1px solid #3a3150;
+color: white;
+border-radius: 30px;
+padding: 14px 18px 14px 46px;
+outline: none;
+}
+
+.search input:focus {
+border-color: var(--purple);
+}
+
+.search::before {
+content: "⌕";
+position: absolute;
+left: 17px;
+top: 7px;
+font-size: 27px;
+color: var(--purple-light);
+}
+
+.top-actions {
+margin-left: auto;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.top-actions select {
+background: #171326;
+color: white;
+border: 1px solid var(--border);
+padding: 11px;
+border-radius: 24px;
+}
+
+.avatar {
+width: 38px;
+height: 38px;
+border-radius: 50%;
+display: grid;
+place-items: center;
+background: linear-gradient(135deg, #d8b4fe, #7c3aed);
+color: #1b1029;
+font-weight: 800;
+}
+
+/* 메인 배너 */
+
+.hero {
+min-height: 320px;
+border: 1px solid #39304d;
+border-radius: 18px;
+overflow: hidden;
+position: relative;
+background:
+\linear-gradient(90deg, #08070d 0%, #100b1b 45%, #29133e 100%);
+display: flex;
+align-items: center;
+padding: 44px;
+margin-bottom: 32px;
+}
+
+.hero::after {
+content: "";
+position: absolute;
+right: 4%;
+top: -130px;
+width: 480px;
+height: 480px;
+border-radius: 50%;
+background:
+\radial-gradient(circle at 40% 40%,
+#f1d7ff 0,
+#b66df4 15%,
+#55217e 40%,
+\transparent 70%);
+opacity: 0.55;
+}
+
+.hero-copy {
+position: relative;
+z-index: 2;
+max-width: 600px;
+}
+
+.eyebrow {
+color: var(--purple-light);
+font-weight: 800;
+letter-spacing: 1.5px;
+font-size: 12px;
+}
+
+.hero h1 {
+font: 800 clamp(46px, 7vw, 76px)/0.98 Georgia, serif;
+margin: 14px 0;
+}
+
+.hero h1 span {
+color: #bd78fa;
+}
+
+.hero h2 {
+font-size: 22px;
+margin-bottom: 12px;
+}
+
+.hero p {
+color: #c9bfd5;
+line-height: 1.8;
+margin-bottom: 22px;
+}
+
+.primary {
+border: none;
+border-radius: 30px;
+background: linear-gradient(100deg, #b15cf5, #7135c5);
+color: white;
+padding: 13px 23px;
+font-weight: 800;
+box-shadow: 0 8px 24px #762cb455;
+}
+
+/* 섹션 공통 */
+
+.section {
+margin: 32px 0;
+}
+
+.section-head {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 16px;
+}
+
+.section-head::before {
+content: "";
+width: 5px;
+height: 25px;
+border-radius: 8px;
+background: var(--purple);
+}
+
+.section-head h2 {
+font-size: 19px;
+}
+
+.section-head small {
+color: var(--muted);
+margin-left: auto;
+}
+
+/* 영화 카드 */
+
+.movie-grid {
+display: grid;
+grid-template-columns: repeat(5, minmax(0, 1fr));
+gap: 15px;
+}
+
+.movie-card {
+background: linear-gradient(180deg, #191529, #100e19);
+border: 1px solid #302942;
+border-radius: 13px;
+overflow: hidden;
+min-width: 0;
+transition: 0.2s;
+}
+
+.movie-card:hover {
+transform: translateY(-4px);
+border-color: #9250ca;
+}
+
+.poster {
+height: 205px;
+position: relative;
+display: flex;
+align-items: end;
+padding: 14px;
+overflow: hidden;
+background: linear-gradient(145deg, var(--c1), var(--c2));
+}
+
+.poster::before {
+content: "";
+position: absolute;
+inset: 0;
+background:
+\radial-gradient(circle at 75% 20%, #ffffff55, transparent 28%),
+\linear-gradient(0deg, #08070ddd, transparent 70%);
+}
+
+.poster::after {
+content: attr(data-symbol);
+position: absolute;
+right: 8px;
+top: 18px;
+font-size: 70px;
+opacity: 0.22;
+}
+
+.poster-title {
+position: relative;
+z-index: 1;
+font: 700 22px Georgia, serif;
+text-shadow: 0 2px 8px #000;
+}
+
+.card-body {
+padding: 12px;
+}
+
+.card-title {
+font-weight: 800;
+margin-bottom: 5px;
+}
+
+.meta {
+font-size: 12px;
+color: var(--muted);
+}
+
+.rating {
+color: var(--gold);
+font-size: 12px;
+margin-top: 9px;
+}
+
+.card-actions {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 10px;
+}
+
+.save {
+background: #28183b;
+color: #d9b4ff;
+border: 1px solid #4d326a;
+border-radius: 18px;
+padding: 6px 10px;
+font-size: 12px;
+}
+
+.save.saved {
+background: #6d28d9;
+color: white;
+}
+
+/* 홈 화면 좌우 구성 */
+
+.side-layout {
+display: grid;
+grid-template-columns: minmax(0, 1fr) 290px;
+gap: 24px;
+}
+
+.festival-list {
+background: var(--panel);
+border: 1px solid var(--border);
+border-radius: 14px;
+padding: 12px;
+}
+
+.festival {
+display: flex;
+gap: 12px;
+align-items: center;
+padding: 13px 8px;
+border-bottom: 1px solid #292338;
+}
+
+.festival:last-child {
+border: none;
+}
+
+.festival-logo {
+width: 42px;
+height: 42px;
+border-radius: 50%;
+display: grid;
+place-items: center;
+background: #251a37;
+color: #d8b4fe;
+font-size: 21px;
+}
+
+.festival b {
+display: block;
+font-size: 13px;
+}
+
+.festival span {
+font-size: 12px;
+color: var(--muted);
+}
+
+/* 감독 카드 */
+
+.director-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 13px;
+}
+
+.director {
+background: var(--panel);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 18px;
+min-height: 100px;
+}
+
+.director strong {
+display: block;
+margin-bottom: 6px;
+}
+
+.director span {
+font-size: 12px;
+color: var(--muted);
+}
+
+/* 영화제 배너 */
+
+.promo {
+border-radius: 14px;
+padding: 23px;
+background:
+\radial-gradient(circle at 100% 0, #6b2a9c, #24113c 60%, #141020);
+border: 1px solid #563276;
+margin-top: 18px;
+}
+
+.promo p {
+color: #e1c9f6;
+line-height: 1.6;
+margin: 12px 0;
+}
+
+/* 페이지 표시 */
+
+.page {
+display: none;
+}
+
+.page.active {
+display: block;
+}
+
+.page-title {
+font-size: 30px;
+margin: 18px 0 8px;
+}
+
+.page-desc {
+color: var(--muted);
+margin-bottom: 22px;
+}
+
+/* 검색 및 필터 */
+
+.filters {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+margin-bottom: 18px;
+}
+
+.filters input,
+.filters select {
+background: #171326;
+color: white;
+border: 1px solid var(--border);
+padding: 11px 13px;
+border-radius: 10px;
+}
+
+/* 상세 화면 */
+
+.detail {
+display: grid;
+grid-template-columns: 240px 1fr;
+gap: 24px;
+background: var(--panel);
+border: 1px solid var(--border);
+border-radius: 16px;
+padding: 22px;
+}
+
+.detail .poster {
+height: 330px;
+border-radius: 12px;
+}
+
+.detail p {
+color: #c8bfd3;
+line-height: 1.8;
+}
+
+.empty {
+padding: 40px;
+text-align: center;
+color: var(--muted);
+background: var(--panel);
+border: 1px dashed var(--border);
+border-radius: 14px;
+}
+
+/* 하단 */
+
+.footer {
+color: #716980;
+text-align: center;
+padding: 38px 0 12px;
+font-size: 12px;
+line-height: 1.8;
+}
+
+/* 태블릿 */
+
+@media (max-width: 1050px) {
+.movie-grid {
+\grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.side-layout {
+\grid-template-columns: 1fr;
+}
+}
+
+/* 모바일 */
+
+@media (max-width: 700px) {
+.sidebar {
+\top: auto;
+\bottom: 0;
+\width: 100%;
+\height: 68px;
+\padding: 6px 5px;
+\background: #100d1bf5;
+\border-right: none;
+\border-top: 1px solid var(--border);
+}
+
+.brand,
+.side-note {
+\display: none;
+}
+
+.nav {
+\display: flex;
+\justify-content: space-around;
+\gap: 0;
+\height: 100%;
+}
+
+.nav button {
+\padding: 6px 4px;
+\font-size: 10px;
+\text-align: center;
+\flex: 1;
+}
+
+.nav .ico {
+\display: block;
+\width: auto;
+\font-size: 18px;
+\margin-bottom: 3px;
+}
+
+main {
+\margin: 0;
+\padding: 0 14px 95px;
+}
+
+.topbar {
+\height: 65px;
+\gap: 8px;
+}
+
+.search input {
+\padding: 11px 12px 11px 37px;
+\font-size: 12px;
+}
+
+.top-actions select {
+\max-width: 95px;
+\padding: 8px 5px;
+\font-size: 11px;
+}
+
+.avatar {
+\width: 32px;
+\height: 32px;
+}
+
+.hero {
+\padding: 25px 21px;
+\min-height: 270px;
+}
+
+.hero h1 {
+\font-size: 48px;
+}
+
+.hero h2 {
+\font-size: 17px;
+}
+
+.hero p {
+\font-size: 13px;
+\max-width: 270px;
+}
+
+.movie-grid {
+\grid-template-columns: repeat(2, minmax(0, 1fr));
+\gap: 10px;
+}
+
+.poster {
+\height: 175px;
+}
+
+.director-grid {
+\grid-template-columns: 1fr 1fr;
+}
+
+.detail {
+\grid-template-columns: 1fr;
+}
+
+.detail .poster {
+\height: 250px;
+\max-width: 220px;
+}
+
+.page-title {
+\font-size: 25px;
+}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- 왼쪽 메뉴 -->
+<aside class="sidebar">
+<div class="brand">
+<span class="brand-mark">🎬</span>
+\CineVerse
+</div>
+
+<nav class="nav">
+<button class="active" data-page="home">
+<span class="ico">⌂</span>홈
+</button>
+
+<button data-page="movies">
+<span class="ico">▣</span>영화
+</button>
+
+<button data-page="directors">
+<span class="ico">🎥</span>감독
+</button>
+
+<button data-page="library">
+<span class="ico">▣</span>보관함
+</button>
+
+<button data-page="festivals">
+<span class="ico">🏆</span>영화제
+</button>
+</nav>
+
+<div class="side-note">
+\Cinema<br>
+\Beyond Time
+</div>
+</aside>
+
+<!-- 메인 화면 -->
+<main>
+
+<!-- 상단 검색 -->
+<header class="topbar">
+<div class="search">
+<input
+\id="globalSearch"
+\placeholder="영화, 감독, 영화제를 검색해보세요..."
+\aria-label="검색">
+</div>
+
+<div class="top-actions">
+<select id="language" aria-label="언어">
+<option value="ko">🌐 한국어</option>
+<option value="en">🌐 English</option>
+<option value="ja">🌐 日本語</option>
+</select>
+
+<span style="font-size:21px;color:#c084fc">♧</span>
+<div class="avatar">C</div>
+</div>
+</header>
+
+<!-- 홈 화면 -->
+<section id="home" class="page active">
+
+<div class="hero">
+<div class="hero-copy">
+<div class="eyebrow">✦ WELCOME TO CINEVERSE</div>
+
+<h1>Cine<span>Verse</span></h1>
+
+<h2>영화가 만드는 또 다른 세상</h2>
+
+<p>
+\전 세계의 영화와 감독, 영화제까지.<br>
+\지금 바로 CineVerse에서 만나보세요.
+</p>
+
+<button class="primary" onclick="showPage('movies')">
+\지금 시작하기 →
+</button>
+</div>
+</div>
+
+<div class="side-layout">
+
+<div>
+<section class="section">
+<div class="section-head">
+<h2 id="dailyHeading">오늘의 추천 영화</h2>
+<small id="dailyDate"></small>
+</div>
+
+<div id="dailyMovies" class="movie-grid"></div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<h2>세계적인 감독들</h2>
+<small>DIRECTORS</small>
+</div>
+
+<div id="homeDirectors" class="director-grid"></div>
+</section>
+
+<section class="section">
+<div class="section-head">
+<h2>CineVerse 보관함</h2>
+<small>
+<a href="#" onclick="showPage('library');return false"
+\style="color:#c084fc">
+\더보기 →
+</a>
+</small>
+</div>
+
+<div id="homeLibrary" class="movie-grid"></div>
+</section>
+</div>
+
+<aside>
+<section class="section">
+<div class="section-head">
+<h2>주요 영화제</h2>
+<small>FESTIVALS</small>
+</div>
+
+<div id="homeFestivals" class="festival-list"></div>
+</section>
+
+<div class="promo">
+<div style="font-size:28px">🎞️</div>
+<b>CineVerse와 함께</b>
+
+<p>
+\영화의 세계를 더 깊이 탐험해 보세요.
+</p>
+
+<button class="primary" onclick="showPage('festivals')">
+\영화제 둘러보기 →
+</button>
+</div>
+</aside>
+
+</div>
+</section>
+
+<!-- 영화 목록 -->
+<section id="movies" class="page">
+<h1 class="page-title">영화 라이브러리</h1>
+
+<p class="page-desc">
+\실제로 개봉한 영화들을 탐색해 보세요.
+</p>
+
+<div class="filters">
+<input id="movieFilter" placeholder="영화 제목 검색">
+
+<select id="genreFilter">
+<option value="">모든 장르</option>
+<option>SF</option>
+<option>드라마</option>
+<option>스릴러</option>
+<option>액션</option>
+<option>애니메이션</option>
+<option>범죄</option>
+</select>
+</div>
+
+<div id="allMovies" class="movie-grid"></div>
+</section>
+
+<!-- 감독 목록 -->
+<section id="directors" class="page">
+<h1 class="page-title">감독</h1>
+
+<p class="page-desc">
+\영화의 세계를 만든 감독들을 만나보세요.
+</p>
+
+<div id="allDirectors" class="director-grid"></div>
+</section>
+
+<!-- 보관함 -->
+<section id="library" class="page">
+<h1 class="page-title">나의 보관함</h1>
+
+<p class="page-desc">
+\관심 있는 영화를 저장하고 언제든 다시 확인하세요.
+</p>
+
+<div id="savedMovies" class="movie-grid"></div>
+</section>
+
+<!-- 영화제 -->
+<section id="festivals" class="page">
+<h1 class="page-title">세계 영화제</h1>
+
+<p class="page-desc">
+\세계적으로 잘 알려진 영화제 정보를 확인해 보세요.
+</p>
+
+<div id="allFestivals" class="festival-list"></div>
+</section>
+
+<!-- 영화 상세 페이지 -->
+<section id="detail" class="page">
+<button class="save" onclick="showPage('movies')">
+\← 목록으로
+</button>
+
+<div id="detailContent" style="margin-top:18px"></div>
+</section>
+
+<footer class="footer">
+\CineVerse · Discover films beyond time<br>
+\영화의 세계를 탐험하세요.
+</footer>
+
+</main>
+</div>
+
+<!-- 2부에서 영화·감독·영화제 데이터와 JavaScript를 이어서 추가합니다. -->
+<script>
+/* =====================================
+   CINEVERSE 2부
+   영화 / 감독 / 영화제 데이터
+===================================== */
+
+/* 영화 데이터: 실제 개봉 작품 */
+
+const movies = [
+  {
+    id: 1,
+    title: "인셉션",
+    english: "Inception",
+    year: 2010,
+    director: "크리스토퍼 놀란",
+    genre: "SF",
+    country: "미국",
+    symbol: "◈",
+    colors: ["#39205d", "#090b20"],
+    description: "타인의 꿈속에 들어가 생각을 훔치거나 심는 기술이 존재하는 세계. 돔 코브는 위험한 임무를 맡게 된다."
+  },
+  {
+    id: 2,
+    title: "인터스텔라",
+    english: "Interstellar",
+    year: 2014,
+    director: "크리스토퍼 놀란",
+    genre: "SF",
+    country: "미국",
+    symbol: "✦",
+    colors: ["#a66c42", "#111b35"],
+    description: "인류의 생존이 어려워진 미래, 한 우주비행사가 새로운 삶의 터전을 찾기 위해 우주로 떠난다."
+  },
+  {
+    id: 3,
+    title: "기생충",
+    english: "Parasite",
+    year: 2019,
+    director: "봉준호",
+    genre: "스릴러",
+    country: "한국",
+    symbol: "▥",
+    colors: ["#45634d", "#101d20"],
+    description: "전혀 다른 환경에서 살아가는 두 가족이 만나면서 예상하지 못한 사건들이 벌어진다."
+  },
+  {
+    id: 4,
+    title: "다크 나이트",
+    english: "The Dark Knight",
+    year: 2008,
+    director: "크리스토퍼 놀란",
+    genre: "액션",
+    country: "미국",
+    symbol: "♠",
+    colors: ["#41434b", "#08090d"],
+    description: "고담시를 지키려는 배트맨과 도시를 혼란에 빠뜨리는 조커의 대립을 그린 작품."
+  },
+  {
+    id: 5,
+    title: "살인의 추억",
+    english: "Memories of Murder",
+    year: 2003,
+    director: "봉준호",
+    genre: "범죄",
+    country: "한국",
+    symbol: "◉",
+    colors: ["#6a4d32", "#171b20"],
+    description: "1980년대 한 시골 마을에서 발생한 연쇄 사건을 수사하는 형사들의 이야기."
+  },
+  {
+    id: 6,
+    title: "센과 치히로의 행방불명",
+    english: "Spirited Away",
+    year: 2001,
+    director: "미야자키 하야오",
+    genre: "애니메이션",
+    country: "일본",
+    symbol: "✿",
+    colors: ["#3c8c91", "#18243b"],
+    description: "신비한 세계에 들어간 소녀 치히로가 가족을 구하기 위해 낯선 세계에서 성장하는 이야기."
+  },
+  {
+    id: 7,
+    title: "헤어질 결심",
+    english: "Decision to Leave",
+    year: 2022,
+    director: "박찬욱",
+    genre: "드라마",
+    country: "한국",
+    symbol: "◇",
+    colors: ["#557d8b", "#19263b"],
+    description: "한 형사가 의문의 사건을 수사하면서 사건의 용의자에게 복잡한 감정을 느끼게 된다."
+  },
+  {
+    id: 8,
+    title: "라라랜드",
+    english: "La La Land",
+    year: 2016,
+    director: "데이미언 셔젤",
+    genre: "드라마",
+    country: "미국",
+    symbol: "♫",
+    colors: ["#e879a4", "#37306d"],
+    description: "꿈을 이루려는 재즈 음악가와 배우 지망생이 만나 사랑과 현실 사이에서 선택을 고민한다."
+  },
+  {
+    id: 9,
+    title: "쇼생크 탈출",
+    english: "The Shawshank Redemption",
+    year: 1994,
+    director: "프랭크 다라본트",
+    genre: "드라마",
+    country: "미국",
+    symbol: "▤",
+    colors: ["#b58b58", "#283b49"],
+    description: "억울하게 수감된 한 남자가 긴 시간 동안 희망을 잃지 않고 살아가는 이야기."
+  },
+  {
+    id: 10,
+    title: "센스 앤 센서빌리티",
+    english: "Sense and Sensibility",
+    year: 1995,
+    director: "이안",
+    genre: "드라마",
+    country: "영국",
+    symbol: "❀",
+    colors: ["#9a7655", "#293b32"],
+    description: "서로 다른 성격을 지닌 두 자매가 사랑과 사회적 현실을 마주하는 이야기."
+  },
+  {
+    id: 11,
+    title: "매드 맥스: 분노의 도로",
+    english: "Mad Max: Fury Road",
+    year: 2015,
+    director: "조지 밀러",
+    genre: "액션",
+    country: "호주",
+    symbol: "⚙",
+    colors: ["#d47b32", "#54251b"],
+    description: "문명이 붕괴한 황무지에서 자유를 찾아 탈출하려는 사람들의 추격전."
+  },
+  {
+    id: 12,
+    title: "월-E",
+    english: "WALL-E",
+    year: 2008,
+    director: "앤드루 스탠턴",
+    genre: "애니메이션",
+    country: "미국",
+    symbol: "♧",
+    colors: ["#d59b4d", "#293b57"],
+    description: "황폐해진 지구에 홀로 남은 로봇 월-E가 새로운 로봇을 만나 특별한 여정을 시작한다."
+  },
+  {
+    id: 13,
+    title: "올드보이",
+    english: "Oldboy",
+    year: 2003,
+    director: "박찬욱",
+    genre: "스릴러",
+    country: "한국",
+    symbol: "◆",
+    colors: ["#6c2639", "#171321"],
+    description: "이유도 모른 채 오랜 시간 감금되었던 한 남자가 풀려난 뒤 진실을 추적한다."
+  },
+  {
+    id: 14,
+    title: "토이 스토리",
+    english: "Toy Story",
+    year: 1995,
+    director: "존 래스터",
+    genre: "애니메이션",
+    country: "미국",
+    symbol: "★",
+    colors: ["#4c91ca", "#e1a34a"],
+    description: "사람이 보지 않을 때 살아 움직이는 장난감들의 우정과 모험을 그린 애니메이션."
+  },
+  {
+    id: 15,
+    title: "그랜드 부다페스트 호텔",
+    english: "The Grand Budapest Hotel",
+    year: 2014,
+    director: "웨스 앤더슨",
+    genre: "드라마",
+    country: "미국",
+    symbol: "▰",
+    colors: ["#d98caa", "#583d73"],
+    description: "유럽의 한 호텔에서 벌어지는 사건과 호텔 직원들의 모험을 그린 작품."
+  },
+  {
+    id: 16,
+    title: "에브리씽 에브리웨어 올 앳 원스",
+    english: "Everything Everywhere All at Once",
+    year: 2022,
+    director: "다니엘 콴·다니엘 샤이너트",
+    genre: "SF",
+    country: "미국",
+    symbol: "◎",
+    colors: ["#5141a0", "#17112c"],
+    description: "여러 우주와 연결된 한 여성이 가족과 자신의 삶을 지키기 위해 특별한 모험을 시작한다."
+  }
+];
+
+
+/* 감독 데이터 */
+
+const directors = [
+  {
+    name: "크리스토퍼 놀란",
+    english: "Christopher Nolan",
+    country: "영국·미국",
+    works: "인셉션 · 인터스텔라 · 다크 나이트",
+    description: "시간과 기억, 현실의 경계를 활용한 독창적인 연출로 잘 알려진 감독."
+  },
+  {
+    name: "봉준호",
+    english: "Bong Joon-ho",
+    country: "대한민국",
+    works: "기생충 · 살인의 추억",
+    description: "장르적 재미와 사회적 메시지를 결합하는 연출로 알려진 감독."
+  },
+  {
+    name: "박찬욱",
+    english: "Park Chan-wook",
+    country: "대한민국",
+    works: "올드보이 · 헤어질 결심",
+    description: "독특한 미장센과 섬세한 화면 구성으로 알려진 감독."
+  },
+  {
+    name: "미야자키 하야오",
+    english: "Hayao Miyazaki",
+    country: "일본",
+    works: "센과 치히로의 행방불명",
+    description: "상상력과 자연에 대한 시선을 담은 애니메이션을 만들어 온 감독."
+  },
+  {
+    name: "데이미언 셔젤",
+    english: "Damien Chazelle",
+    country: "미국",
+    works: "라라랜드 · 위플래쉬",
+    description: "음악과 꿈, 열정을 역동적인 영상으로 표현하는 감독."
+  },
+  {
+    name: "웨스 앤더슨",
+    english: "Wes Anderson",
+    country: "미국",
+    works: "그랜드 부다페스트 호텔",
+    description: "대칭적인 화면 구성과 독특한 색감으로 잘 알려진 감독."
+  },
+  {
+    name: "조지 밀러",
+    english: "George Miller",
+    country: "호주",
+    works: "매드 맥스: 분노의 도로",
+    description: "역동적인 액션과 독창적인 세계관을 보여주는 감독."
+  },
+  {
+    name: "이안",
+    english: "Ang Lee",
+    country: "대만",
+    works: "센스 앤 센서빌리티 · 라이프 오브 파이",
+    description: "다양한 장르와 문화적 배경을 넘나드는 작품을 연출한 감독."
+  },
+  {
+    name: "앤드루 스탠턴",
+    english: "Andrew Stanton",
+    country: "미국",
+    works: "월-E · 니모를 찾아서",
+    description: "감정과 모험을 담은 애니메이션으로 알려진 감독."
+  },
+  {
+    name: "프랭크 다라본트",
+    english: "Frank Darabont",
+    country: "미국",
+    works: "쇼생크 탈출 · 그린 마일",
+    description: "인물의 감정과 희망을 섬세하게 그려내는 감독."
+  },
+  {
+    name: "존 래스터",
+    english: "John Lasseter",
+    country: "미국",
+    works: "토이 스토리",
+    description: "컴퓨터 애니메이션 영화의 발전에 중요한 역할을 한 감독."
+  },
+  {
+    name: "다니엘 콴·다니엘 샤이너트",
+    english: "Daniel Kwan & Daniel Scheinert",
+    country: "미국",
+    works: "에브리씽 에브리웨어 올 앳 원스",
+    description: "독창적인 상상력과 장르의 결합으로 알려진 영화 연출팀."
+  }
+];
+
+
+/* 영화제 데이터 */
+
+const festivals = [
+  {
+    name: "칸 영화제",
+    english: "Festival de Cannes",
+    country: "프랑스 · 칸",
+    symbol: "✺",
+    description: "세계적으로 영향력 있는 국제 영화제 중 하나로, 황금종려상으로 잘 알려져 있다."
+  },
+  {
+    name: "베를린 국제영화제",
+    english: "Berlinale",
+    country: "독일 · 베를린",
+    symbol: "🐻",
+    description: "베를린에서 열리는 국제 영화제로, 최고상인 황금곰상을 수여한다."
+  },
+  {
+    name: "베니스 국제영화제",
+    english: "Venice Film Festival",
+    country: "이탈리아 · 베니스",
+    symbol: "🦁",
+    description: "베니스에서 개최되는 오랜 역사를 지닌 국제 영화제로 황금사자상이 유명하다."
+  },
+  {
+    name: "부산국제영화제",
+    english: "Busan International Film Festival",
+    country: "대한민국 · 부산",
+    symbol: "🎬",
+    description: "아시아 영화를 소개하고 세계 영화인들이 교류하는 대표적인 국제 영화제."
+  },
+  {
+    name: "선댄스 영화제",
+    english: "Sundance Film Festival",
+    country: "미국",
+    symbol: "☀",
+    description: "독립영화와 신인 창작자의 작품을 소개하는 영화제로 잘 알려져 있다."
+  },
+  {
+    name: "토론토 국제영화제",
+    english: "Toronto International Film Festival",
+    country: "캐나다 · 토론토",
+    symbol: "🍁",
+    description: "다양한 국가의 영화와 대중적인 작품을 소개하는 국제 영화제."
+  },
+  {
+    name: "도쿄 국제영화제",
+    english: "Tokyo International Film Festival",
+    country: "일본 · 도쿄",
+    symbol: "🎞",
+    description: "일본 도쿄에서 열리는 국제 영화제로 여러 국가의 작품을 소개한다."
+  }
+];
+
+
+/* =====================================
+   공통 카드 생성 함수
+===================================== */
+
+function makeMovieCard(movie) {
+  const saved = getSavedMovies().includes(movie.id);
+
+  return `
+    <article class="movie-card">
+      <div
+        class="poster"
+        data-symbol="${movie.symbol}"
+        style="--c1:${movie.colors[0]};--c2:${movie.colors[1]}"
+        onclick="openMovie(${movie.id})"
+        role="button"
+        tabindex="0"
+        aria-label="${movie.title} 상세 보기">
+
+        <div class="poster-title">${movie.english}</div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-title">${movie.title}</div>
+
+        <div class="meta">
+          ${movie.year} · ${movie.genre} · ${movie.country}
+        </div>
+
+        <div class="card-actions">
+          <span class="meta">${movie.director}</span>
+
+          <button
+            class="save ${saved ? "saved" : ""}"
+            onclick="toggleSave(${movie.id})">
+            ${saved ? "저장됨 ✓" : "+ 보관"}
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+
+/* =====================================
+   감독 카드
+===================================== */
+
+function makeDirectorCard(director) {
+  return `
+    <article class="director">
+      <strong>${director.name}</strong>
+      <span>${director.english}</span>
+      <p class="meta" style="margin-top:8px">
+        ${director.country}
+      </p>
+      <p class="meta" style="margin-top:8px">
+        대표작: ${director.works}
+      </p>
+    </article>
+  `;
+}
+
+
+/* =====================================
+   영화제 카드
+===================================== */
+
+function makeFestivalCard(festival) {
+  return `
+    <article class="festival">
+      <div class="festival-logo">${festival.symbol}</div>
+
+      <div>
+        <b>${festival.name}</b>
+        <span>${festival.country}</span>
+      </div>
+    </article>
+  `;
+}
+
+
+/* =====================================
+   오늘의 추천 영화
+   날짜가 바뀌면 추천 목록도 변경
+===================================== */
+
+function getDailyMovies() {
+  const today = new Date();
+  const dateKey =
+    today.getFullYear() * 10000 +
+    (today.getMonth() + 1) * 100 +
+    today.getDate();
+
+  const shuffled = [...movies];
+
+  let seed = dateKey;
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    seed = (seed * 9301 + 49297) % 233280;
+
+    const j = Math.floor(
+      (seed / 233280) * (i + 1)
+    );
+
+    [shuffled[i], shuffled[j]] =
+      [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, 5);
+}
+
+
+/* =====================================
+   홈 화면 출력
+===================================== */
+
+function renderHome() {
+  const daily = getDailyMovies();
+
+  document.getElementById("dailyMovies").innerHTML =
+    daily.map(makeMovieCard).join("");
+
+  document.getElementById("dailyDate").textContent =
+    new Date().toLocaleDateString("ko-KR");
+
+  document.getElementById("homeDirectors").innerHTML =
+    directors.slice(0, 6).map(makeDirectorCard).join("");
+
+  const saved = getSavedMovies();
+
+  document.getElementById("homeLibrary").innerHTML =
+    saved.length
+      ? movies
+          .filter(movie => saved.includes(movie.id))
+          .slice(0, 5)
+          .map(makeMovieCard)
+          .join("")
+      : '<div class="empty">아직 보관한 영화가 없습니다.</div>';
+
+  document.getElementById("homeFestivals").innerHTML =
+    festivals.slice(0, 5).map(makeFestivalCard).join("");
+}
+
+
+/* =====================================
+   전체 영화 목록 출력
+===================================== */
+
+function renderMovies(list = movies) {
+  const target = document.getElementById("allMovies");
+
+  target.innerHTML = list.length
+    ? list.map(makeMovieCard).join("")
+    : '<div class="empty">검색 결과가 없습니다.</div>';
+}
+
+
+/* =====================================
+   전체 감독 목록 출력
+===================================== */
+
+function renderDirectors() {
+  document.getElementById("allDirectors").innerHTML =
+    directors.map(makeDirectorCard).join("");
+}
+
+
+/* =====================================
+   전체 영화제 목록 출력
+===================================== */
+
+function renderFestivals() {
+  document.getElementById("allFestivals").innerHTML =
+    festivals.map(makeFestivalCard).join("");
+}
+
+
+/* =====================================
+   보관함 출력
+===================================== */
+
+function renderLibrary() {
+  const saved = getSavedMovies();
+
+  const list = movies.filter(movie =>
+    saved.includes(movie.id)
+  );
+
+  document.getElementById("savedMovies").innerHTML =
+    list.length
+      ? list.map(makeMovieCard).join("")
+      : '<div class="empty">보관함이 비어 있습니다.<br>마음에 드는 영화를 보관해 보세요.</div>';
+}
+
+
+/* =====================================
+   첫 화면 데이터 출력
+===================================== */
+
+renderHome();
+renderMovies();
+renderDirectors();
+renderFestivals();
+renderLibrary();
+
+</script>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineVerse</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <button class="logo" data-page="home">✺ CineVerse</button>
+  <input id="searchAll" placeholder="영화, 감독, 영화제를 검색해보세요">
+  <span class="profile">CV</span>
+</header>
+
+<aside class="side">
+  <nav>
+    <button data-page="home">◆ 홈</button>
+    <button data-page="movies">▣ 영화</button>
+    <button data-page="directors">♟ 감독</button>
+    <button data-page="library">♧ 보관함</button>
+    <button data-page="festivals">🏆 영화제</button>
+    <button data-page="community">☏ 커뮤니티</button>
+  </nav>
+</aside>
+
+<main>
+  <section id="home" class="page active">
+    <div class="hero">
+      <div>
+        <h1>CineVerse</h1>
+        <h2>영화가 만드는 또 다른 세상</h2>
+        <p>전 세계의 영화, 감독, 영화제까지.</p>
+        <button class="cta" data-page="movies">지금 시작하기</button>
+      </div>
+    </div>
+
+    <div class="tiles">
+      <button data-page="movies">🎬 모든 영화 보기</button>
+      <button data-page="directors">감독 알아보기</button>
+      <button data-page="festivals">🏆 영화제 둘러보기</button>
+      <button data-page="library">🔖 보관함</button>
+    </div>
+
+    <div class="lower">
+      <article class="panel">
+        <h3>주요 영화제</h3>
+        <div id="homeFestivals"></div>
+      </article>
+      <article class="panel">
+        <h3>오늘의 영화 추천</h3>
+        <div id="homeMovies"></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="movies" class="page">
+    <h1>영화</h1>
+    <input id="movieSearch" placeholder="영화 검색">
+    <select id="genre">
+      <option value="">모든 장르</option>
+      <option>드라마</option>
+      <option>SF</option>
+      <option>액션</option>
+      <option>애니메이션</option>
+    </select>
+    <div id="movieGrid" class="grid"></div>
+  </section>
+
+  <section id="directors" class="page">
+    <h1>감독</h1>
+    <div id="directorGrid" class="director-grid"></div>
+  </section>
+
+  <section id="library" class="page">
+    <h1>보관함</h1>
+    <div id="libraryGrid" class="grid"></div>
+  </section>
+
+  <section id="festivals" class="page">
+    <h1>세계 영화제</h1>
+    <input id="festivalSearch" placeholder="영화제·국가·도시 검색">
+    <select id="continent">
+      <option value="">모든 대륙</option>
+      <option>Asia</option>
+      <option>Europe</option>
+      <option>Africa</option>
+      <option>North America</option>
+      <option>South America</option>
+      <option>Oceania</option>
+    </select>
+    <div id="festivalGrid" class="festival-grid"></div>
+  </section>
+
+  <section id="community" class="page">
+    <h1>영화 커뮤니티</h1>
+    <form id="postForm">
+      <input id="postTitle" placeholder="게시글 제목" required>
+      <textarea id="postBody" placeholder="내용" required></textarea>
+      <button class="cta">게시하기</button>
+    </form>
+    <div id="posts"></div>
+  </section>
+
+  <section id="detail" class="page">
+    <button id="back">← 돌아가기</button>
+    <div id="detailBody"></div>
+  </section>
+</main>
+
+<footer>
+  <b>CineVerse</b>
+  <span>영화와 함께하는 더 특별한 세상</span>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
+
